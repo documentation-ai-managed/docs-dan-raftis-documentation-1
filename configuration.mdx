@@ -1,0 +1,127 @@
+---
+title: Configuration
+description: Configure and customize Dan Raftis Documentation to fit your team's needs
+---
+
+## Configuration Basics
+
+Configuring Dan Raftis Documentation allows you to tailor the platform to your specific requirements, from branding to functionality. Start with the core settings and expand as needed.
+
+<Columns cols={2}>
+  <Card title="Basic Setup" icon="settings" href="#basic-setup">
+    Configure essential settings like site name, domain, and user roles.
+  </Card>
+  <Card title="Advanced Options" icon="sliders" href="#advanced-options">
+    Fine-tune performance, integrations, and custom features.
+  </Card>
+</Columns>
+
+## Basic Setup
+
+Begin with fundamental configuration options that establish your documentation foundation.
+
+<Steps>
+  <Step title="Site Information" icon="globe">
+    Set your site name, description, and custom domain.
+  </Step>
+  <Step title="Branding" icon="palette">
+    Upload logos, set color schemes, and customize the UI.
+  </Step>
+  <Step title="User Management" icon="users">
+    Configure authentication methods and access controls.
+  </Step>
+</Steps>
+
+<CodeGroup tabs="JSON,YAML">
+  ```json
+  {
+    "site": {
+      "name": "Dan Raftis Documentation",
+      "domain": "docs.example.com",
+      "description": "Comprehensive project documentation platform"
+    },
+    "branding": {
+      "primaryColor": "#3B82F6",
+      "logoUrl": "https://example.com/logo.png"
+    }
+  }
+  ```
+  ```yaml
+  site:
+    name: Dan Raftis Documentation
+    domain: docs.example.com
+    description: Comprehensive project documentation platform
+  branding:
+    primaryColor: '#3B82F6'
+    logoUrl: https://example.com/logo.png
+  ```
+</CodeGroup>
+
+## Advanced Options
+
+For power users, explore advanced configuration options to optimize performance and functionality.
+
+<Tabs>
+  <Tab title="Performance" icon="zap">
+    Optimize loading times and resource usage.
+
+    <Expandable title="Caching Settings" default-open="false">
+      Configure CDN integration and cache policies for faster content delivery.
+    </Expandable>
+  </Tab>
+  <Tab title="Integrations" icon="plug">
+    Connect with external services and tools.
+
+    <Expandable title="Webhook Configuration" default-open="false">
+      Set up webhooks for real-time notifications on documentation changes.
+    </Expandable>
+  </Tab>
+</Tabs>
+
+<Callout kind="info">
+  Advanced configurations require careful testing. Always backup your settings before making changes.
+</Callout>
+
+## Environment Variables
+
+Use environment variables for sensitive configuration and deployment-specific settings.
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `DATABASE_URL` | Database connection string | `postgresql://user:pass@host/db` |
+| `API_SECRET` | API authentication secret | `sk-1234567890abcdef` |
+| `REDIS_URL` | Redis cache connection | `redis://localhost:6379` |
+
+<Expandable title="Environment Setup" default-open="true">
+  <Steps>
+    <Step title="Create .env File" icon="file">
+      Create a `.env` file in your project root.
+    </Step>
+    <Step title="Set Variables" icon="settings">
+      Define environment-specific values.
+    </Step>
+    <Step title="Load Variables" icon="download">
+      Use a library like `dotenv` to load variables in your application.
+    </Step>
+  </Steps>
+</Expandable>
+
+## Troubleshooting Configuration
+
+Resolve common configuration issues with these troubleshooting steps.
+
+<Callout kind="alert">
+  If configuration changes don't take effect, try clearing your browser cache or restarting the application server.
+</Callout>
+
+<ExpandableGroup>
+  <Expandable title="Domain Configuration Issues" default-open="false">
+    Verify DNS settings and SSL certificate installation for custom domains.
+  </Expandable>
+  <Expandable title="Branding Not Applying" default-open="false">
+    Check file formats and ensure uploaded assets meet size requirements.
+  </Expandable>
+  <Expandable title="Integration Failures" default-open="false">
+    Review API keys, webhook URLs, and authentication credentials.
+  </Expandable>
+</ExpandableGroup>

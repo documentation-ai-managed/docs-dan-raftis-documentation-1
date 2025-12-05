@@ -1,0 +1,115 @@
+---
+title: Authentication
+description: Learn how to authenticate and manage access to Dan Raftis Documentation
+---
+
+## Authentication Overview
+
+Authentication in Dan Raftis Documentation ensures secure access to your documentation spaces and controls user permissions. We support multiple authentication methods to fit different team structures and security requirements.
+
+<Tabs>
+  <Tab title="API Keys" icon="key">
+    Use API keys for programmatic access to documentation resources.
+
+    <Steps>
+      <Step title="Generate Key" icon="plus">
+        Navigate to settings and create a new API key with appropriate permissions.
+      </Step>
+      <Step title="Configure Permissions" icon="shield">
+        Set read/write access levels for different documentation sections.
+      </Step>
+      <Step title="Use in Requests" icon="send">
+        Include the API key in request headers for authenticated access.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="OAuth" icon="lock">
+    Integrate with OAuth providers for single sign-on capabilities.
+
+    <CodeGroup tabs="JavaScript,Python">
+      ```javascript
+      const auth = {
+        provider: 'google',
+        clientId: 'your-client-id',
+        redirectUri: 'https://docs.example.com/auth/callback'
+      };
+
+      function authenticateUser() {
+        window.location.href = `https://oauth.example.com/auth?client_id=${auth.clientId}&redirect_uri=${auth.redirectUri}`;
+      }
+      ```
+      ```python
+      import requests
+
+      def authenticate_oauth():
+          auth_data = {
+              'client_id': 'your-client-id',
+              'client_secret': 'your-client-secret',
+              'grant_type': 'authorization_code',
+              'code': request.args.get('code'),
+              'redirect_uri': 'https://docs.example.com/auth/callback'
+          }
+          response = requests.post('https://oauth.example.com/token', data=auth_data)
+          return response.json()
+      ```
+    </CodeGroup>
+  </Tab>
+</Tabs>
+
+<Callout kind="alert">
+  Always store API keys securely and rotate them regularly to maintain security.
+</Callout>
+
+## User Management
+
+Manage team members and their access levels across your documentation spaces.
+
+<Steps>
+  <Step title="Invite Users" icon="user-plus">
+    Send invitations via email with role-based permissions.
+  </Step>
+  <Step title="Set Roles" icon="users">
+    Assign roles like Admin, Editor, or Viewer to control access.
+  </Step>
+  <Step title="Audit Logs" icon="file-text">
+    Review authentication events and access patterns.
+  </Step>
+</Steps>
+
+<Expandable title="Permission Levels" default-open="true">
+  <ExpandableGroup>
+    <Expandable title="Admin" default-open="false">
+      Full access to all documentation, user management, and system settings.
+    </Expandable>
+    <Expandable title="Editor" default-open="false">
+      Can create, edit, and publish documentation content.
+    </Expandable>
+    <Expandable title="Viewer" default-open="false">
+      Read-only access to published documentation.
+    </Expandable>
+  </ExpandableGroup>
+</Expandable>
+
+## Security Best Practices
+
+Implement these practices to maintain a secure documentation environment.
+
+<Callout kind="tip">
+  Enable two-factor authentication for all admin accounts to add an extra layer of security.
+</Callout>
+
+| Practice | Description |
+|----------|-------------|
+| Regular Audits | Review access logs monthly |
+| Key Rotation | Rotate API keys every 90 days |
+| Least Privilege | Grant minimum required permissions |
+
+## Troubleshooting
+
+Common authentication issues and their solutions.
+
+<Expandable title="Common Issues" default-open="false">
+  - **Invalid API Key**: Verify the key hasn't expired and has correct permissions.
+  - **OAuth Redirect Error**: Check that redirect URIs match exactly in provider settings.
+  - **Permission Denied**: Ensure user role includes necessary access levels.
+</Expandable>

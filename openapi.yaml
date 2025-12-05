@@ -1,0 +1,154 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Dan Raftis Documentation API
+  license:
+    name: MIT
+servers:
+  - url: https://api.docs.danraftis.com/v1
+paths:
+  /documents:
+    get:
+      summary: Retrieve a comprehensive list of all documents available in the Dan Raftis Documentation system, supporting advanced filtering and pagination to efficiently manage large collections of documentation content. This endpoint enables developers and administrators to programmatically access and organize documentation resources across different projects and teams.
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: Controls the maximum number of documents returned in a single response, helping optimize API performance and manage data transfer efficiently
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Successfully retrieved the requested list of documents with complete metadata including titles, authors, creation dates, and access permissions
+          headers:
+            x-next:
+              description: Provides a direct link to the next page of results when pagination is applied, enabling seamless navigation through large document collections
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: Indicates an unexpected error occurred during the document retrieval process, requiring investigation of the request parameters or system status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new document in the Dan Raftis Documentation platform, allowing users to programmatically add structured content with rich formatting, metadata, and organizational tags for better content management and discoverability.
+      operationId: createDocument
+      responses:
+        201:
+          description: Document creation completed successfully, returning the newly created document's unique identifier and complete metadata for immediate use in subsequent operations
+        default:
+          description: Document creation failed due to validation errors, permission issues, or system constraints, with detailed error information provided for troubleshooting
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: Fetch detailed information about a specific document by its unique identifier, providing comprehensive metadata, content structure, version history, and access control details to support comprehensive document management and integration workflows.
+      operationId: getDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: The unique identifier assigned to the document during creation, used to precisely locate and retrieve the requested documentation resource
+          schema:
+            type: string
+      responses:
+        200:
+          description: Document details retrieved successfully, including full content, metadata, permissions, and version information for complete programmatic access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: Document retrieval encountered an error, possibly due to invalid identifier, access restrictions, or system unavailability
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users:
+    get:
+      summary: Obtain a paginated list of all registered users in the Dan Raftis Documentation system, including their roles, permissions, and activity status to facilitate team management and access control administration across documentation spaces.
+      operationId: listUsers
+      parameters:
+        - name: limit
+          in: query
+          description: Specifies the maximum number of user records to return per request, enabling efficient data retrieval and processing for large user bases
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: User list successfully retrieved with detailed profiles including roles, permissions, and recent activity for comprehensive user management capabilities
+          headers:
+            x-next:
+              description: Contains the URL for accessing the subsequent page of user results when the total exceeds the specified limit
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        default:
+          description: User retrieval operation failed due to authentication issues, permission restrictions, or internal system errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        content:
+          type: string
+        authorId:
+          type: integer
+          format: int64
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    User:
+      required:
+        - id
+        - email
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+        role:
+          type: string
+        active:
+          type: boolean
+    Users:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
